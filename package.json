@@ -1,0 +1,13 @@
+{
+  "name": "codespace-fast-download",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Adaptive high-speed file browser/download server for GitHub Codespaces",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
