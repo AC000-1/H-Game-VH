@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#111827">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>Random Tướng</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding:
+                max(20px, env(safe-area-inset-top))
+                max(20px, env(safe-area-inset-right))
+                max(20px, env(safe-area-inset-bottom))
+                max(20px, env(safe-area-inset-left));
+
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Roboto,
+                Arial,
+                sans-serif;
+
+            color: white;
+
+            background:
+                radial-gradient(circle at top left, #4f46e5 0%, transparent 35%),
+                radial-gradient(circle at bottom right, #9333ea 0%, transparent 35%),
+                #0f172a;
+        }
+
+        .card {
+            width: min(90vw, 600px);
+            padding: 50px 30px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 28px;
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+
+            animation: appear 0.5s ease;
+        }
+
+        .title {
+            margin: 0 0 10px;
+
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+
+            color: #c4b5fd;
+        }
+
+        #hero {
+            margin: 0 0 35px;
+
+            font-size: clamp(42px, 10vw, 76px);
+            font-weight: 800;
+            letter-spacing: -2px;
+
+            word-break: break-word;
+
+            text-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.35);
+
+            transition:
+                opacity 0.15s ease,
+                transform 0.15s ease;
+        }
+
+        #hero.changing {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        button {
+            width: 100%;
+            max-width: 280px;
+
+            padding: 16px 24px;
+
+            border: 0;
+            border-radius: 14px;
+
+            font-size: 17px;
+            font-weight: 700;
+
+            color: white;
+            background: linear-gradient(135deg, #6366f1, #9333ea);
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(99, 102, 241, 0.35);
+
+            -webkit-tap-highlight-color: transparent;
+
+            transition:
+                transform 0.15s ease,
+                box-shadow 0.15s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 14px 30px rgba(99, 102, 241, 0.45);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .hint {
+            margin-top: 18px;
+
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="card">
+
+        <p class="title">Random Tướng</p>
+
+        <h1 id="hero">...</h1>
+
+        <button id="randomButton" type="button">
+            Random tướng
+        </button>
+
+        <div class="hint">
+            Nhấn Space để random
+        </div>
+
+    </main>
+
+    <script>
+        const characters = `
+Tamyn Flowborn Dyadia Edras Goverra Heino Billow Bolt_Baron Biron Dolia Charlotte
+Tachi Dirak Qi Erin Ming Bijan Bonnie Teeri Yue Yan Aya Aoi Iggy Bright Lorion
+Dextra Sinestrea Thorne Allain Zata Rouie Laville Paine Ata Keera Ishar Eland_orr
+Krizzix Volkath Celica Zip Enzo Yena Errol Capheny Hayate D_Arcy Veres Florentino
+Sephera Quillen Wiro Richter Elsu Y_bneth Amily Annette Baldum Roxie Marja Rourke
+Arum Wisp The_Flash Max Liliana Tulen Omen Lindis TeeMee Moren Kil_Groth Xeniel
+Wonder_Woman Superman Tel_Annas Astrid Ryoma Stuart Arduin Zill Murad Ignis Zuka
+Airi Kaine Lauriel Raz Skud Preyta Ilumia Slimz Arthur Kriknak Ngo_Who_Khong
+Maloch Helen Jinna Cresht Natalya Lumburr Fennik Aleister Grakk Nakroth Taara
+Toro Yorn Gildur Alice Azzen_Ka Ormarr Butterfly Violet Chaugnar Dieu_Thuyen
+Zephys Kahlii Omega Trieu_Van Mganga Krixi Mina Lu_Bo Veera Thane Valhein
+        `.trim().split(/\s+/);
+
+        const hero = document.getElementById("hero");
+        const button = document.getElementById("randomButton");
+
+        let lastCharacter = null;
+
+        function randomCharacter() {
+            let character;
+
+            do {
+                character =
+                    characters[
+                        Math.floor(Math.random() * characters.length)
+                    ];
+            } while (
+                characters.length > 1 &&
+                character === lastCharacter
+            );
+
+            lastCharacter = character;
+
+            hero.classList.add("changing");
+
+            setTimeout(function () {
+                hero.textContent = character;
+                hero.classList.remove("changing");
+            }, 150);
+        }
+
+        button.addEventListener("click", randomCharacter);
+
+        document.addEventListener("keydown", function (event) {
+            if (event.code === "Space") {
+                event.preventDefault();
+                randomCharacter();
+            }
+        });
+
+        // Random ngay khi mở trang
+        randomCharacter();
+    </script>
+
+</body>
+</html>
